@@ -1,0 +1,23 @@
+tags:
+  - training
+  - model
+
+params:
+  dataset_path: "dataset"
+
+  delete_synthetic: true
+  generate_synthetic: true
+  synthetic_per_image: 10
+
+  split_dataset: true
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  copy_images: true
+
+  model_name: "my_model.keras"
+  batch_size: 32
+  learning_rate: 0.001
+  num_epochs: 10
+  img_width: 224
+  img_height: 224
