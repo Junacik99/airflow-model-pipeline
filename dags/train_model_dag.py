@@ -119,7 +119,7 @@ with DAG(
             'train_dir': os.path.join(HOME_DIR, '{{ params.dataset_path }}', 'train'),
             'valid_dir': os.path.join(HOME_DIR, '{{ params.dataset_path }}', 'valid'),
             'test_dir': os.path.join(HOME_DIR, '{{ params.dataset_path }}', 'test'),
-            'model_path': os.path.join(HOME_DIR, 'output', 'models', '{{ params.model_name }}'),
+            'model_path': os.path.join(HOME_DIR, 'output', 'models', '{{ params.model_name }}.{{ params.model_extension }}'),
             'img_width': '{{ params.img_width }}',
             'img_height': '{{ params.img_height }}',
             'learning_rate': '{{ params.learning_rate }}',

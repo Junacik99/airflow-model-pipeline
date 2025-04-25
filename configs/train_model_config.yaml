@@ -15,7 +15,8 @@ params:
   test_ratio: 0.15
   copy_images: true
 
-  model_name: "my_model.keras"
+  model_name: "my_model"
+  model_extension: "keras"
   batch_size: 32
   learning_rate: 0.001
   num_epochs: 10
