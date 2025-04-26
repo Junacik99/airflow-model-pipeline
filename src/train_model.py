@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, BatchNormalization
+import click
 
 from src.data_augmentation import CardDataGenerator
 from src.model_utils import plot_history
@@ -95,3 +96,34 @@ def train_model(
     
     model.save(model_path)
     print("Model saved to", model_path)
+
+
+@click.command()
+@click.option('--img_width', default=224, help='Image width')
+@click.option('--img_height', default=224, help='Image height')
+@click.option('--learning_rate', default=0.001, help='Learning rate')
+@click.option('--batch_size', default=32, help='Batch size')
+@click.option('--epochs', default=10, help='Number of epochs')
+@click.option('--num_classes', default=10, help='Number of classes')
+@click.option('--train_dir', default='dataset/train', help='Training directory')
+@click.option('--valid_dir', default='dataset/valid', help='Validation directory')
+@click.option('--test_dir', default='dataset/test', help='Testing directory')
+@click.option('--model_path', default='model.keras', help='Path to save the model')
+@click.option('--fig_path', default='model_history.png', help='Path to save the training history plot')
+def main(img_width, img_height, learning_rate, batch_size, epochs, num_classes, train_dir, valid_dir, test_dir, model_path, fig_path):
+    train_model(
+        img_width=img_width,
+        img_height=img_height,
+        learning_rate=learning_rate,
+        batch_size=batch_size,
+        epochs=epochs,
+        num_classes=num_classes,
+        train_dir=train_dir,
+        valid_dir=valid_dir,
+        test_dir=test_dir,
+        model_path=model_path,
+        fig_path=fig_path
+    )
+
+if __name__ == '__main__':
+    main()
