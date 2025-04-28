@@ -1,10 +1,9 @@
-import tensorflow as tf
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, BatchNormalization
+from tensorflow.keras.optimizers import Adam
 import click
 
 from src.data_augmentation import CardDataGenerator
 from src.model_utils import plot_history
+from src.model import CardModel
 
 def train_model(
     img_width: int = 224,
@@ -25,26 +24,17 @@ def train_model(
     epochs = int(epochs)
     learning_rate = float(learning_rate)
 
-    print("Obtraining base model")
-    base_model = tf.keras.applications.MobileNetV2(input_shape=img_size + (3,),
-                                               include_top=False,
-                                               weights='imagenet')
     print("Creating model")
-    # Architecture
-    avg = GlobalAveragePooling2D()(base_model.output)
-    x = Dense(128, activation='relu')(avg)
-    x = BatchNormalization()(x)
-    output = Dense(num_classes, activation='softmax')(x)
+    model = CardModel(num_classes=num_classes, img_size=img_size).model
 
-    model = Model(inputs=base_model.input, outputs=output)
-    base_model.trainable = False
-
-    optimizer = tf.keras.optimizers.Adam(
+    optimizer = Adam(
         learning_rate=learning_rate,
-        )
+    )
+
     model.compile(optimizer=optimizer,
                 loss='categorical_crossentropy',
-                metrics=['accuracy'])
+                metrics=['accuracy']
+    )
     
 
     print("Loading dataset")
@@ -90,7 +80,8 @@ def train_model(
         train_generator,
         validation_data=valid_generator,
         batch_size=batch_size,
-        epochs=epochs)
+        epochs=epochs
+    )
     
     plot_history(history, fig_path)
     

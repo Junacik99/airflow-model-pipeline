@@ -37,6 +37,8 @@ with DAG(
     # 2. Generate synthetic data
     # 3. Split dataset
     # 4. Train model
+    # 5. TODO Evaluate model on test set
+    # 6. TODO Deploy for android
 
 
     # Load dataset
