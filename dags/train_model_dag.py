@@ -12,6 +12,7 @@ from src.load_dataset import check_dataset
 from src.generate_synthetic_data import generate
 from src.split_dataset import split_dataset
 from src.train_model import train_model
+from src.eval_model import evaluate_model
 
 HOME_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,7 +38,7 @@ with DAG(
     # 2. Generate synthetic data
     # 3. Split dataset
     # 4. Train model
-    # 5. TODO Evaluate model on test set
+    # 5. Evaluate model on test set
     # 6. TODO Deploy for android
 
 
@@ -132,4 +133,17 @@ with DAG(
         }
     )
 
-    dataset_task >> synthetic_data_task >> split_dataset_task >> train_model_task
+    # Evaluate model
+    evaluate_model_task = PythonOperator(
+        task_id='evaluate_model',
+        python_callable=evaluate_model,
+        op_kwargs={
+            'model_path': os.path.join(HOME_DIR, 'output', 'models', '{{ params.model_name }}.{{ params.model_extension }}'),
+            'test_dir': os.path.join(HOME_DIR, '{{ params.dataset_path }}', 'test'),
+            'img_width': '{{ params.img_width }}',
+            'img_height': '{{ params.img_height }}',
+            'batch_size': '{{ params.batch_size }}'
+        }
+    )
+
+    dataset_task >> synthetic_data_task >> split_dataset_task >> train_model_task >> evaluate_model_task

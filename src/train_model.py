@@ -59,7 +59,6 @@ def train_model(
         h_kernel_size=25
     )
     valid_datagen = CardDataGenerator()
-    test_datagen = CardDataGenerator()
 
     # Create generators
     train_generator = train_datagen.flow_from_directory(
@@ -73,13 +72,6 @@ def train_model(
         target_size=img_size,
         batch_size=batch_size,
         class_mode='categorical'
-    )
-    test_generator = test_datagen.flow_from_directory(
-        test_dir,
-        target_size=img_size,
-        batch_size=batch_size,
-        class_mode='categorical',
-        shuffle=False
     )
 
     print("Training model")

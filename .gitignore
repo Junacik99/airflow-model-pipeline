@@ -7,5 +7,6 @@ src/__pycache__/model_utils.cpython-312.pyc
 src/__pycache__/split_dataset.cpython-312.pyc
 src/__pycache__/train_model.cpython-312.pyc
 src/__pycache__/model.cpython-312.pyc
-output/**
 src/__pycache__/models.cpython-312.pyc
+src/__pycache__/eval_model.cpython-312.pyc
+output/**
