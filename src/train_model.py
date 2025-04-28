@@ -3,7 +3,7 @@ import click
 
 from src.data_augmentation import CardDataGenerator
 from src.model_utils import plot_history
-from src.model import CardModel
+from train_model.src.models import CardModel, BinaryCardModel
 
 def train_model(
     img_width: int = 224,
@@ -25,7 +25,14 @@ def train_model(
     learning_rate = float(learning_rate)
 
     print("Creating model")
-    model = CardModel(num_classes=num_classes, img_size=img_size).model
+    print("Image size:", img_size)
+    print("Number of classes:", num_classes)
+    if num_classes == 2:
+        print("Using binary classification model")
+        model = BinaryCardModel(img_size=img_size).model
+    else:
+        print("Using multi-class classification model")
+        model = CardModel(num_classes=num_classes, img_size=img_size).model
 
     optimizer = Adam(
         learning_rate=learning_rate,
