@@ -27,7 +27,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='model_dag',
+    dag_id='model_pipeline',
     default_args=default_args,
     schedule=None,
     catchup=False,
